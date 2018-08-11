@@ -65,22 +65,22 @@ $(document).ready(function() {
     })
 
     $(document).on('click', '.update-image', function() {
-        console.log($('input#image_url').val());
         $(image_holder).attr('src', $('input#image_url').val());
-        console.log(image_holder);
     })
 
     $('.save').on('click', function() {
-        console.log(document.title);
+        (window.location.href.split('/').slice(-1)[0]) ? (window.location.href.split('/').slice(-1)[0]) : 1;
         $.ajax({
             url: "save",
             type: "GET",
             data: {
-                _id: window.location.href.split('/').slice(-1)[0],
+                _id: (window.location.href.split('/').slice(-1)[0]) ? (window.location.href.split('/').slice(-1)[0]) : 1,
                 row_data:$(".data-container").html(),
                 title:document.title
             },
             success: function(response) {
+                if(window.location.href.split('/').slice(-1)[0] == ""){window.location = "/"+response;}
+                else{return false;}
             },
             error: function(xhr) {
             }

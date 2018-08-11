@@ -14,15 +14,9 @@ app = Flask(__name__)
 app.debug = True
 
 @app.route('/')
-def index():
-	newFile = randint(999,999999999)
-	ifile = open("templates/index.html", "rb")
-	ofile = open("templates/"+str(newFile)+".html","wb")
-	ofile.write(ifile.read())
-	ifile.close()
-	ofile.close()
-	#return render_template('index.html')
-	return redirect('/'+str(newFile))
+def index():	
+	return render_template('index.html')
+	
 
 @app.route('/<int:id>')
 def draft(id):
@@ -31,13 +25,22 @@ def draft(id):
 
 @app.route('/save', methods=['GET', 'POST'])
 def publish():
+	newFile = randint(999,999999999)
+	ofile = open("templates/"+str(newFile)+".html","wb")
 	row_data = request.args.get('row_data').encode('utf-8')
 	_id = request.args.get('_id')
 	title = request.args.get('title')
-	ofile = open("templates/"+str(_id)+".html","wb")
+	print type(_id.encode('ascii','ignore'))
+	if _id == "1":
+		fileName = "templates/"+str(newFile)+".html"
+	elif _id != "1":
+		fileName = "templates/"+str(_id)+".html"
+		newFile = _id
+	
+	ofile = open(fileName,"wb")
 	ofile.write(pre_data_container(title)+urlparse.unquote(row_data)+post_data_container)
 	ofile.close()
-	return "Successfully saved"
+	return str(newFile)
 
 if __name__ == '__main__':
     app.run()
