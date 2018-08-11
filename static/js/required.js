@@ -71,6 +71,7 @@ $(document).ready(function() {
     })
 
     $('.save').on('click', function() {
+        console.log(document.title);
         $.ajax({
             url: "save",
             type: "GET",
