@@ -76,7 +76,8 @@ $(document).ready(function() {
             type: "GET",
             data: {
                 _id: window.location.href.split('/').slice(-1)[0],
-                row_data:$(".data-container").html()
+                row_data:$(".data-container").html(),
+                title:document.title
             },
             success: function(response) {
             },
