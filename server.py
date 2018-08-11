@@ -20,19 +20,13 @@ def index():
 
 @app.route('/<int:id>')
 def draft(id):
-	print str(id)+".html"
 	#return render_template('index.html')
 	return render_template(str(id)+".html")
-
-@app.route('/create')
-def help():
-	return render_template("create.html")
 
 @app.route('/save', methods=['GET', 'POST'])
 def publish():
 	row_data = request.args.get('row_data').encode('utf-8')
 	_id = request.args.get('_id')
-	print row_data
 	ofile = open("templates/"+str(_id)+".html","wb")
 	ofile.write("<!DOCTYPE html><html lang='en'>"+row_data+"</html>")
 	ofile.close()
