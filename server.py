@@ -1,6 +1,7 @@
 from flask import Flask, redirect, url_for, session, request, jsonify, render_template
 from flask_oauthlib.client import OAuth
-import json, string, sqlite3, re, os, urlparse
+import json, string, sqlite3, re, os
+from urllib.parse import urlparse
 
 from random import randint
 
