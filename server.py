@@ -33,6 +33,7 @@ def draft(id):
 def publish():
 	row_data = request.args.get('row_data').encode('utf-8')
 	_id = request.args.get('_id')
+	title = request.args.get('title')
 	ofile = open("templates/"+str(_id)+".html","wb")
 	ofile.write(pre_data_container(title)+urlparse.unquote(row_data)+post_data_container)
 	ofile.close()
