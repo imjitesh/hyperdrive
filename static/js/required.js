@@ -77,7 +77,7 @@ $(document).ready(function() {
             type: "GET", //send it through get method
             data: {
                 _id: window.location.href.split('/').slice(-1)[0],
-                row_data:$("html").html()
+                row_data:$(".data-container").html()
             },
             success: function(response) {
                 //Do Something
