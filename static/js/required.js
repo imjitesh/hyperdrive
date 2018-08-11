@@ -53,7 +53,6 @@ $(document).ready(function() {
         }
         if(this.className == 'title-area'){
             document.title = $(this).val();
-            console.log($(this).val());
         }
 
         setTimeout(function() {
@@ -77,7 +76,7 @@ $(document).ready(function() {
             type: "GET",
             data: {
                 _id: window.location.href.split('/').slice(-1)[0],
-                row_data:$("html").html()
+                row_data:$(".data-container").html()
             },
             success: function(response) {
             },
