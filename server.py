@@ -28,7 +28,7 @@ def publish():
 	row_data = request.args.get('row_data').encode('utf-8')
 	_id = request.args.get('_id')
 	ofile = open("templates/"+str(_id)+".html","wb")
-	ofile.write("<!DOCTYPE html><html lang='en'>"+row_data+"</html>")
+	ofile.write("<!DOCTYPE html><html lang='en'>"+row_data.decode('utf-8')+"</html>")
 	ofile.close()
 	return "Successfully saved"
 
