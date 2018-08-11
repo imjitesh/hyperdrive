@@ -1,6 +1,6 @@
 from flask import Flask, redirect, url_for, session, request, jsonify, render_template
 from flask_oauthlib.client import OAuth
-import json, string, sqlite3, re, os
+import json, string, sqlite3, re, os,urllib2
 
 from random import randint
 
@@ -28,7 +28,7 @@ def publish():
 	row_data = request.args.get('row_data').encode('utf-8')
 	_id = request.args.get('_id')
 	ofile = open("templates/"+str(_id)+".html","wb")
-	ofile.write("<!DOCTYPE html><html lang='en'>"+row_data.decode('utf-8')+"</html>")
+	ofile.write("<!DOCTYPE html><html lang='en'>"+urllib2.unquote(row_data)+"</html>")
 	ofile.close()
 	return "Successfully saved"
 
