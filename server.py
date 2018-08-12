@@ -28,6 +28,12 @@ def save():
 	row_data = request.files['html_file']
 	fileName = str(newFile) if row_data.filename == '1' else row_data.filename
 	row_data.save("templates/"+fileName+".html")
+	ifile = open("templates/"+fileName+".html", 'rb')
+	html_data = ifile.read()
+	ifile.close()
+	ofile = open("templates/"+fileName+".html","wb")
+	ofile.write("<!DOCTYPE html>"+html_data)
+	ofile.close()
 
 	return json.dumps({'_id':fileName,"is_created":row_data.filename == '1'})
 
