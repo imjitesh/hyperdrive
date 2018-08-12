@@ -76,24 +76,27 @@ $(document).ready(function() {
     })
 
     $('.save').on('click', function() {
-        console.log($(".data-container .data-row")[0]);
         var _id = (window.location.href.split('/').slice(-1)[0]) ? (window.location.href.split('/').slice(-1)[0]) : 1
+        var f = new File([document.documentElement.outerHTML], _id);
+        var formData = new FormData();
+        formData.append('html_file', f);
         $.ajax({
-            url: "save",
-            type: "GET",
-            data: {
-                _id: _id,
-                row_data: $(".data-container").html(),
-                title: document.title
-            },
-            success: function(response) {
-                if (window.location.href.split('/').slice(-1)[0] == "") {
-                    window.location = "/" + response;
-                } else {
-                    return false;
+            url: 'save',
+            type: "POST",
+            processData: false,
+            contentType: false,
+            data: formData,
+            success: function(result) {
+                if(JSON.parse(result)['is_created']){
+                    window.location = JSON.parse(result)['_id'];
+                }
+                else{
+                    console.log("is_updated");
                 }
             },
-            error: function(xhr) {}
+            error: function() {
+                console.log("something happened");
+            }
         });
     })
 

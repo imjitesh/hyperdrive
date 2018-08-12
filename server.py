@@ -22,23 +22,14 @@ def draft(id):
 	#return render_template('index.html')
 	return render_template(str(id)+".html")
 
-@app.route('/save', methods=['GET', 'POST'])
-def publish():
+@app.route('/save', methods=['POST'])
+def save():
 	newFile = randint(999,999999999)
-	row_data = request.args.get('row_data').encode('utf-8')
-	_id = request.args.get('_id')
-	title = request.args.get('title')
-	print type(_id.encode('ascii','ignore'))
-	if str(_id) == "1":
-		fileName = "templates/"+str(newFile)+".html"
-	elif str(_id) != "1":
-		fileName = "templates/"+str(_id)+".html"
-		newFile = _id
-	
-	ofile = open(fileName,"wb")
-	ofile.write(pre_data_container(title)+urlparse.unquote(row_data)+post_data_container)
-	ofile.close()
-	return str(newFile)
+	row_data = request.files['html_file']
+	fileName = str(newFile) if row_data.filename == '1' else row_data.filename
+	row_data.save("templates/"+fileName+".html")
+
+	return json.dumps({'_id':fileName,"is_created":row_data.filename == '1'})
 
 if __name__ == '__main__':
     app.run()
