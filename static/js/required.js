@@ -40,6 +40,12 @@ $(document).ready(function() {
     })
     $('img.type5').on('click', function() {
         $('.data-container').append($('.type5-container').html());
+        $('.ba-slider').each(function() {
+            var cur = $(this);
+            var width = cur.width() + 'px';
+            cur.find('.resize img').css('width', width);
+            drags(cur.find('.handle'), cur.find('.resize'), cur);
+        });
     })
 
     $(document).on('keyup', 'textarea', function autosize(e) {
@@ -51,7 +57,7 @@ $(document).ready(function() {
                 $(this).parent().parent().remove();
             }
         }
-        if(this.className == 'title-area'){
+        if (this.className == 'title-area') {
             document.title = $(this).val();
         }
 
@@ -66,24 +72,28 @@ $(document).ready(function() {
 
     $(document).on('click', '.update-image', function() {
         $(image_holder).attr('src', $('input#image_url').val());
+        $('input#image_url').val("");
     })
 
     $('.save').on('click', function() {
-        (window.location.href.split('/').slice(-1)[0]) ? (window.location.href.split('/').slice(-1)[0]) : 1;
+        console.log($(".data-container .data-row")[0]);
+        var _id = (window.location.href.split('/').slice(-1)[0]) ? (window.location.href.split('/').slice(-1)[0]) : 1
         $.ajax({
             url: "save",
             type: "GET",
             data: {
-                _id: (window.location.href.split('/').slice(-1)[0]) ? (window.location.href.split('/').slice(-1)[0]) : 1,
-                row_data:$(".data-container").html(),
-                title:document.title
+                _id: _id,
+                row_data: $(".data-container").html(),
+                title: document.title
             },
             success: function(response) {
-                if(window.location.href.split('/').slice(-1)[0] == ""){window.location = "/"+response;}
-                else{return false;}
+                if (window.location.href.split('/').slice(-1)[0] == "") {
+                    window.location = "/" + response;
+                } else {
+                    return false;
+                }
             },
-            error: function(xhr) {
-            }
+            error: function(xhr) {}
         });
     })
 
