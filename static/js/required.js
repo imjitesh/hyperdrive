@@ -100,4 +100,17 @@ $(document).ready(function() {
         });
     })
 
+    $('body').on('click','#publish', function(){
+        var head = "<!DOCTYPE html><html lang='en'><head>"+$('head').html()+"</head>"
+        var body = "<body><div class='container-fluid data-container' style='margin:0 auto;width:75%;'>"+$('.data-container').html().replace(/<textarea/g,"<textarea disabled")+"</body></html>"
+        var fileName = document.title.replace(/[\W_]+/g,"_") +".html"
+        var htmlContent = [head+body];
+        console.log(htmlContent);
+        var bl = new Blob(htmlContent, {type: "text/html"});
+        var encodedUri = URL.createObjectURL(bl);
+        var link = document.getElementById('publish');
+        link.setAttribute("href",encodedUri);
+        link.setAttribute("download",fileName);
+        })
+
 });
