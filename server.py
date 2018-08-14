@@ -2,6 +2,7 @@ from flask import Flask, redirect, url_for, session, request, jsonify, render_te
 from flask_oauthlib.client import OAuth
 import json, string, sqlite3, re, os
 import urlparse
+import glob
 
 from random import randint
 
@@ -36,6 +37,12 @@ def save():
 	ofile.close()
 
 	return json.dumps({'_id':fileName,"is_created":row_data.filename == '1'})
+
+@app.route('/instructions')
+def instructions():
+	print(glob.glob("templates/*.html"))
+	return json.dumps(glob.glob("templates/*.html"))
+
 
 if __name__ == '__main__':
     app.run()
